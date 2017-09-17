@@ -1,10 +1,11 @@
 var app = angular.module('jsbin', []);
 
 app.controller('DemoCtrl', function ($http, $sce) {
-    this.name = 'Test';
+    var ctrl = this;
+    ctrl.name = 'Test';
     
     $http.get('data/cards.json')
         .success(function(data){
-            this.cards = data.data.Cards;
+            ctrl.cards = data.data.Cards;
         });
 });
