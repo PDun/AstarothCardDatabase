@@ -6,6 +6,6 @@ app.controller('DemoCtrl', function ($http, $sce) {
     
     $http.get('data/cards.json')
         .success(function(data){
-            console.log(data);
+            this.cards = data.data.Cards;
         });
 });
