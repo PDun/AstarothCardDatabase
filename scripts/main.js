@@ -4,12 +4,8 @@ app.controller('DemoCtrl', function ($http, $sce) {
     this.name = 'Test';
     this.cards = [];
     
-    $http.get( { url:'https://loapk3.fingertactic.com/card.php?do=GetAllCard',
-        headers: {
-            'Access-Control-Allow-Origin':'*'
-        }
-    })
+    $http.get('data/cards.json')
         .success(function(data){
-            console.log(data.found);
+            console.log(data);
         });
 });
