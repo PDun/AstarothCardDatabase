@@ -20,8 +20,8 @@ this.BuildCardData = function() {
     var data = cards.map(function(x) {
         var obj = {
             Name: x.CardName,
-            Cost: x.Cost,
-            Cooldown: x.Wait,
+            Cost: parseInt(x.Cost),
+            Cooldown: parseInt(x.Wait),
             Race: "",
             Skill0: "",
             Skill5: "",
@@ -77,7 +77,7 @@ this.BuildCardData = function() {
             var obj = {
                 Name: x.RuneName,
                 Condition: x.Condition,
-
+                TriggerCount: parseInt(x.SkillTimes)
             };
             var skill1 =  skills.find(function(y) { return y.SkillId == x.LockSkill1 });
             if (typeof skill1 !== 'undefined') {
