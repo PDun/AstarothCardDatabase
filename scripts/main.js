@@ -88,26 +88,32 @@ this.BuildCardData = function() {
             };
             var skill1 =  skills.find(function(y) { return y.SkillId == x.LockSkill1 });
             if (typeof skill1 !== 'undefined') {
-                obj.skill1 = skill1.Name;
+                obj.Skill1 = skill1.Name;
+                obj.Skill1Desc = skill1.Desc;
             }
             
             var skill2 =  skills.find(function(y) { return y.SkillId == x.LockSkill2 });
             if (typeof skill2 !== 'undefined') {
-                obj.skill2 = skill2.Name;
+                obj.Skill2 = skill2.Name;
+                obj.Skill2Desc = skill2.Desc;
             }
     
             var skill3 =  skills.find(function(y) { return y.SkillId == x.LockSkill3 });
             if (typeof skill3 !== 'undefined') {
-                obj.skill3 =  skill3.Name;
+                obj.Skill3 =  skill3.Name;
+                obj.Skill3Desc = skill3.Desc;
             }
             var skill4 =  skills.find(function(y) { return y.SkillId == x.LockSkill4 });
             if (typeof skill4 !== 'undefined') {
-                obj.skill4 =  skill4.Name;
+                obj.Skill4 =  skill4.Name;
+                obj.Skill4Desc = skill4.Desc;
             }
             var skill5 =  skills.find(function(y) { return y.SkillId == x.LockSkill5 });
             if (typeof skill5 !== 'undefined') {
-                obj.skill5 =  skill5.Name;
+                obj.Skill5 =  skill5.Name;
+                obj.Skill5Desc = skill5.Desc;
             }
+            obj.Image = "https://0eabc54bb140e84b34eb-c97fac0b01f2b85bd280c0b0242e4e49.ssl.cf1.rackcdn.com/20150504loawebtestcdn/public/swf/rune/83_83/rune_" + x.RuneId + ".png";
             return obj;
         });
         return data;
@@ -122,7 +128,7 @@ this.BuildCardData = function() {
         rowHeight:80,
         columnDefs: [
           { field: 'Name' },
-          { field: 'Image', cellTemplate:"<img ng-src=\"{{grid.getCellValue(row, col)}}\" lazy-src>", width:80,wifth:2, enableFiltering: false, enableSorting: false},
+          { field: 'Image', cellTemplate:"<img ng-src=\"{{grid.getCellValue(row, col)}}\" lazy-src>", width:80, enableFiltering: false, enableSorting: false},
           { field: 'Cost', width: 100  },
           { field: 'Cooldown', width: 100  },
           { field: 'Race', width: 100   },
@@ -133,9 +139,25 @@ this.BuildCardData = function() {
         ],
         data:this.BuildCardData()
       };
-    ctrl.cards = this.BuildCardData();
 
-    ctrl.runes = this.GetRuneData();
+      $scope.runesGrid = {
+        enableSorting: true,
+        enableFiltering: true,
+        rowHeight:80,
+        columnDefs: [
+          { field: 'Name' },
+          { field: 'Image', cellTemplate:"<img ng-src=\"{{grid.getCellValue(row, col)}}\" lazy-src>", width:80,enableFiltering: false, enableSorting: false},
+          { field: 'Condition', width: 250 },
+          { field: 'TriggerCount', width: 150  },
+          { field: 'Skill1',  cellTooltip : function(row,col) { return row.entity.Skill1Desc; }},
+          { field: 'Skill2',  cellTooltip : function(row,col) { return row.entity.Skill2Desc; }},
+          { field: 'Skill3'  , cellTooltip : function(row,col) { return row.entity.Skill3Desc; }},
+          { field: 'Skill4'  , cellTooltip : function(row,col) { return row.entity.Skill4Desc; }},
+          { field: 'Skill5'  , cellTooltip : function(row,col) { return row.entity.Skill5Desc; }},
+          
+        ],
+        data:this.GetRuneData()
+      };
 });
 
 
