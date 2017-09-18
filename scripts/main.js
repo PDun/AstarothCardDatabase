@@ -51,6 +51,7 @@ this.BuildCardData = function() {
             obj.Skill10 =  skill10.Name;
             obj.Skill10Desc = skill10.Desc
         }
+        obj.ExpArray = x.ExpArray;
         obj.Image = "https://0eabc54bb140e84b34eb-c97fac0b01f2b85bd280c0b0242e4e49.ssl.cf1.rackcdn.com/20150504loawebtestcdn/public/swf/card/80_80/img_photoCard_" + x.CardId + ".jpg";
         return obj;
     });
@@ -114,6 +115,7 @@ this.BuildCardData = function() {
                 obj.Skill5Desc = skill5.Desc;
             }
             obj.Image = "https://0eabc54bb140e84b34eb-c97fac0b01f2b85bd280c0b0242e4e49.ssl.cf1.rackcdn.com/20150504loawebtestcdn/public/swf/rune/83_83/rune_" + x.RuneId + ".png";
+            obj.ExpArray = x.ExpArray;
             return obj;
         });
         return data;
@@ -132,9 +134,9 @@ this.BuildCardData = function() {
           { field: 'Cost', width: 100  },
           { field: 'Cooldown', width: 100  },
           { field: 'Race', width: 100   },
-          { field: 'Skill0',  cellTooltip : function(row,col) { return row.entity.Skill0Desc; }},
-          { field: 'Skill5',  cellTooltip : function(row,col) { return row.entity.Skill5Desc; }},
-          { field: 'Skill10'  , cellTooltip : function(row,col) { return row.entity.Skill10Desc; }},
+          { field: 'Skill0',  cellTooltip : function(row,col) { return 'Exp Needed: ' + row.entity.ExpArray[0] + '\r\n' + row.entity.Skill0Desc; }},
+          { field: 'Skill5',  cellTooltip : function(row,col) { return 'Exp Needed: ' + row.entity.ExpArray[4] + '\r\n' +row.entity.Skill5Desc; }},
+          { field: 'Skill10'  , cellTooltip : function(row,col) { return 'Exp Needed: ' + row.entity.ExpArray[9] + '\r\n' +row.entity.Skill10Desc; }},
           
         ],
         data:this.BuildCardData()
@@ -149,11 +151,11 @@ this.BuildCardData = function() {
           { field: 'Image', cellTemplate:"<img ng-src=\"{{grid.getCellValue(row, col)}}\" lazy-src>", width:80,enableFiltering: false, enableSorting: false},
           { field: 'Condition', width: 250 },
           { field: 'TriggerCount', width: 150  },
-          { field: 'Skill1',  cellTooltip : function(row,col) { return row.entity.Skill1Desc; }},
-          { field: 'Skill2',  cellTooltip : function(row,col) { return row.entity.Skill2Desc; }},
-          { field: 'Skill3'  , cellTooltip : function(row,col) { return row.entity.Skill3Desc; }},
-          { field: 'Skill4'  , cellTooltip : function(row,col) { return row.entity.Skill4Desc; }},
-          { field: 'Skill5'  , cellTooltip : function(row,col) { return row.entity.Skill5Desc; }},
+          { field: 'Skill1',  cellTooltip : function(row,col) { return 'Exp Needed: ' + row.entity.ExpArray[0] + '\r\n' + row.entity.Skill1Desc; }},
+          { field: 'Skill2',  cellTooltip : function(row,col) { return 'Exp Needed: ' + row.entity.ExpArray[1] + '\r\n' +row.entity.Skill2Desc; }},
+          { field: 'Skill3'  , cellTooltip : function(row,col) { return 'Exp Needed: ' + row.entity.ExpArray[2] + '\r\n' +row.entity.Skill3Desc; }},
+          { field: 'Skill4'  , cellTooltip : function(row,col) { return 'Exp Needed: ' + row.entity.ExpArray[3] + '\r\n' +row.entity.Skill4Desc; }},
+          { field: 'Skill5'  , cellTooltip : function(row,col) { return 'Exp Needed: ' + row.entity.ExpArray[4] + '\r\n' +row.entity.Skill5Desc; }},
           
         ],
         data:this.GetRuneData()
