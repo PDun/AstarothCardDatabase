@@ -14,34 +14,20 @@
   
   <body ng-app="app">
     <div ng-controller="CardsController as demo">
-            <table>
-                <thead>
-                    <td>Name</td>
-                    <td>Cost</td>
-                    <td>Attack</td>
-                    <td>Cd</td>
-                    <td>Race</td>
-                    <td>Skill 0</td>
-                    <td>Skill 5</td>
-                    <td>Skill 10</td>
-                </thead>
-                    <tr ng-repeat="x in demo.cards">
-                      <td>{{ x.CardName }}</td>
-                      <td>{{ x.Cost }}</td>
-                      <td>{{ x.Attack }}</td>
-                      <td>{{ x.Wait }}</td>
-                      <td>{{demo.Race[x.Race-1].name}}</td>
-                      <td>{{demo.skills[x.Skill - 1].Name}}</td>
-                      <td>{{demo.skills[x.LockSkill1 - 1].Name}}</td>
-                      <td>{{demo.skills[x.LockSkill2 - 1].Name}}</td>
-                    </tr>
-                  </table>
+            <div ui-grid="{ data: demo.cards, enableFiltering: true }" class="grid" ui-grid-auto-resize></div>
       <footer>
       </footer>
     </div>
   </body>
-  
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js"></script>
+  <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-grid/4.0.6/ui-grid.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-grid/4.0.6/ui-grid.min.css" />
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
   <script src="data\cards.js"></script>
   <script src="scripts\main.js"></script>
 </html>
