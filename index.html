@@ -22,8 +22,11 @@
                     <td>Cd</td>
                     <td>Race</td>
                     <td>Skill 0</td>
+                    <td>Skill 0 Description</td>
                     <td>Skill 5</td>
+                  <td>Skill 5 Description</td>
                     <td>Skill 10</td>
+                  <td>Skill 10 Description</td>
                 </thead>
                     <tr ng-repeat="x in demo.cards">
                       <td>{{ x.CardName }}</td>
@@ -32,8 +35,11 @@
                       <td>{{ x.Wait }}</td>
                       <td>{{demo.Race[x.Race-1].name}}</td>
                       <td>{{demo.skills[x.Skill - 1].Name}}</td>
+                      <td>{{demo.skills[x.Skill - 1].Desc}}</td>
                       <td>{{demo.skills[x.LockSkill1 - 1].Name}}</td>
+                      <td>{{demo.skills[x.LockSkill1 - 1].Desc}}</td>
                       <td>{{demo.skills[x.LockSkill2 - 1].Name}}</td>
+                      <td>{{demo.skills[x.LockSkill2 - 1].Desc}}</td>
                     </tr>
                   </table>
       <footer>
