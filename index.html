@@ -14,21 +14,22 @@
 </head>
 
 <body ng-app="app">
-    <div ng-controller="CardsController as demo">
 
-        <div class="container">
-            <div class="jumbotron">
-                <pre>Cards</pre>
-                <div ui-grid="cardsGrid" class="grid" ui-grid-auto-resize ui-grid-resize-columns></div>
-            </div>
-        </div>
+    <div ng-controller="databaseController as db">
         <div class="container">
             <div class="jumbotron">
                 <pre>Skills</pre>
-                <div ui-grid="{ data: demo.skills, enableFiltering: true }" class="grid" ui-grid-auto-resize ui-grid-resize-columns></div>
+                <div ui-grid="{ data: db.skillsData, enableFiltering: true }" class="grid" ui-grid-auto-resize ui-grid-resize-columns></div>
             </div>
         </div>
         <div class="container">
+            <div class="jumbotron">
+                <pre>Cards</pre>
+                <div ui-grid="cardsGrid" class="grid" ui-grid-auto-resize ui-grid-resize-columns ui-grid-pinning ui-grid-expandable></div>
+            </div>
+        </div>
+        <div class="container">
+
             <div class="jumbotron">
                 <pre>Runes</pre>
                 <div ui-grid="runesGrid" class="grid" ui-grid-auto-resize ui-grid-resize-columns></div>
@@ -47,7 +48,10 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
     crossorigin="anonymous">
 
-<script src="scripts\main.js"></script>
+<script src="scripts\controller.js"></script>
+<script src="FormattedData\runeData.js"></script>
+<script src="FormattedData\cardData.js"></script>
+<script src="FormattedData\skillData.js"></script>
 <link rel="stylesheet" href="main.css" type="text/css" />
 
 </html>
