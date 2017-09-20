@@ -50,6 +50,8 @@ app.controller('databaseController',  function ($scope, runes,cards,skills,stage
 
       $scope.stagesGrid = {
         
+        enableSorting: true,
+        enableFiltering: true,
         rowHeight:80,
         data: stages.GetStageData(),
     }
