@@ -1,6 +1,6 @@
 var app = angular.module('app', ['ui.grid','ui.grid.autoResize','ui.grid.resizeColumns', 'ui.grid.expandable', 'ui.grid.selection', 'ui.grid.pinning']);
 
-app.controller('databaseController',  function ($scope, runes,cards,skills) { 
+app.controller('databaseController',  function ($scope, runes,cards,skills,stages) { 
     var ctrl = this;
     $scope.runesGrid = {
         enableSorting: true,
@@ -47,4 +47,20 @@ app.controller('databaseController',  function ($scope, runes,cards,skills) {
       };
 
       ctrl.skillsData = skills.GetSkillData();
+      
+      $scope.stagesGrid = {
+        
+        rowHeight:80,
+        data: stages.GetStageData(),
+        
+        columnDefs: [
+            { field: 'Name' }
+        ],
+        expandableRowTemplate: '<div class="container"><div ui-grid="row.entity.subGridOptions" style="height:150px;"></div></div>',
+        expandableRowHeight: 150,
+        //subGridVariable will be available in subGrid scope
+        expandableRowScope: {
+          subGridVariable: 'subGridScopeVariable'
+        },
+    }
 });
