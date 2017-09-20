@@ -47,20 +47,10 @@ app.controller('databaseController',  function ($scope, runes,cards,skills,stage
       };
 
       ctrl.skillsData = skills.GetSkillData();
-      
+
       $scope.stagesGrid = {
         
         rowHeight:80,
         data: stages.GetStageData(),
-        
-        columnDefs: [
-            { field: 'Name' }
-        ],
-        expandableRowTemplate: '<div class="container"><div ui-grid="row.entity.subGridOptions" style="height:150px;"></div></div>',
-        expandableRowHeight: 150,
-        //subGridVariable will be available in subGrid scope
-        expandableRowScope: {
-          subGridVariable: 'subGridScopeVariable'
-        },
     }
 });
