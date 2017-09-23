@@ -154,6 +154,7 @@ app.controller('CardsController', function ($scope) {
         var cards = this.GetCards();
         var runes = this.GetRunes();
         var stages = this.GetStages();
+        var skills = this.GetSkills();
 
         var mapStages = [];
         var stageData = stages.forEach(function (stage) {
@@ -184,14 +185,22 @@ app.controller('CardsController', function ($scope) {
                         var cardList = [];
                         level.CardList.split(',').forEach(function(rawCardData) { 
                             var cardData = rawCardData.split('_');
+                            var cardInfo = "";
                             for (var card in cards) {
-                                var cardInfo = "";
                                 if (cards[card].CardId === cardData[0]) {
                                     cardInfo =  " Level " + cardData[1] + " " + cards[card].CardName;
-                                    cardList.push(cardInfo);
                                     break;
                                 }
                             }
+                            if (typeof cardData[2] != 'undefined') {
+                                for (var skill in skills) {
+                                    if (skills[skill].SkillId == cardData[2]) {
+                                        cardInfo +=  " Evolve Skill " + skills[skill].Name;
+                                        break;
+                                    }
+                                }
+                            }
+                            cardList.push(cardInfo);
                         });
                         mapStages.push({
                             Stage: stage.MapStageId + "-" + (index + 1),
@@ -202,7 +211,7 @@ app.controller('CardsController', function ($scope) {
                             ExploringBonus: level.BonusExplore,
                             FirstWinBonus: firstWin,
                             WinBonus: level.BonusWin,
-                            Cards: cardList
+                            Cards: cardList.toString()
                         })
                     })
                 }
