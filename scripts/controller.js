@@ -1,7 +1,33 @@
-var app = angular.module('app', ['ui.grid','ui.grid.autoResize','ui.grid.resizeColumns', 'ui.grid.expandable', 'ui.grid.selection', 'ui.grid.pinning']);
+var app = angular.module('app', ['ui.grid','ui.grid.autoResize','ui.grid.resizeColumns', 'ui.grid.expandable', 'ui.grid.selection', 'ui.grid.pinning', 'ui.grid.exporter']);
 
 app.controller('databaseController',  function ($scope, runes,cards,skills,stages) { 
     var ctrl = this;
+    $scope.skillGrid = {
+      data: skills.GetSkillData(), 
+      enableFiltering: true,
+      enableGridMenu: true,
+      enableSelectAll: true,
+      exporterCsvFilename: 'LoaSkills.csv',
+      exporterPdfDefaultStyle: {fontSize: 9},
+      exporterPdfTableStyle: {margin: [30, 30, 30, 30]},
+      exporterPdfTableHeaderStyle: {fontSize: 10, bold: true, italics: true, color: 'red'},
+      exporterPdfHeader: { text: "LoA Skills", style: 'headerStyle' },
+      exporterPdfFooter: function ( currentPage, pageCount ) {
+        return { text: currentPage.toString() + ' of ' + pageCount.toString(), style: 'footerStyle' };
+      },
+      exporterPdfCustomFormatter: function ( docDefinition ) {
+        docDefinition.styles.headerStyle = { fontSize: 22, bold: true };
+        docDefinition.styles.footerStyle = { fontSize: 10, bold: true };
+        return docDefinition;
+      },
+      exporterPdfOrientation: 'portrait',
+      exporterPdfPageSize: 'LETTER',
+      exporterPdfMaxGridWidth: 500,
+      exporterCsvLinkElement: angular.element(document.querySelectorAll(".custom-csv-link-location")),
+      onRegisterApi: function(gridApi){
+        $scope.gridApi = gridApi;
+      }
+    }
     $scope.runesGrid = {
         enableSorting: true,
         enableFiltering: true,
@@ -18,7 +44,29 @@ app.controller('databaseController',  function ($scope, runes,cards,skills,stage
           { field: 'Skill5'  , cellTooltip : function(row,col) { return 'Exp Needed: ' + row.entity.ExpArray[4] + '\r\n' +row.entity.Skill5Desc; }},
           
         ],
-        data:runes.GetRuneData()
+        data:runes.GetRuneData(),
+        enableGridMenu: true,
+        enableSelectAll: true,
+        exporterCsvFilename: 'LoARunes.csv',
+        exporterPdfDefaultStyle: {fontSize: 9},
+        exporterPdfTableStyle: {margin: [30, 30, 30, 30]},
+        exporterPdfTableHeaderStyle: {fontSize: 10, bold: true, italics: true, color: 'red'},
+        exporterPdfHeader: { text: "LoA Runes", style: 'headerStyle' },
+        exporterPdfFooter: function ( currentPage, pageCount ) {
+          return { text: currentPage.toString() + ' of ' + pageCount.toString(), style: 'footerStyle' };
+        },
+        exporterPdfCustomFormatter: function ( docDefinition ) {
+          docDefinition.styles.headerStyle = { fontSize: 22, bold: true };
+          docDefinition.styles.footerStyle = { fontSize: 10, bold: true };
+          return docDefinition;
+        },
+        exporterPdfOrientation: 'portrait',
+        exporterPdfPageSize: 'LETTER',
+        exporterPdfMaxGridWidth: 500,
+        exporterCsvLinkElement: angular.element(document.querySelectorAll(".custom-csv-link-location")),
+        onRegisterApi: function(gridApi){
+          $scope.gridApi = gridApi;
+        }
       };
       
     $scope.cardsGrid = {
@@ -43,10 +91,32 @@ app.controller('databaseController',  function ($scope, runes,cards,skills,stage
         expandableRowScope: {
           subGridVariable: 'subGridScopeVariable'
         },
-        data:cards.GetCardData()
+        data:cards.GetCardData(),
+        enableGridMenu: true,
+        enableSelectAll: true,
+        exporterCsvFilename: 'LoaSkills.csv',
+        exporterPdfDefaultStyle: {fontSize: 9},
+        exporterPdfTableStyle: {margin: [30, 30, 30, 30]},
+        exporterPdfTableHeaderStyle: {fontSize: 10, bold: true, italics: true, color: 'red'},
+        exporterPdfHeader: { text: "LoA Cards", style: 'headerStyle' },
+        exporterPdfFooter: function ( currentPage, pageCount ) {
+          return { text: currentPage.toString() + ' of ' + pageCount.toString(), style: 'footerStyle' };
+        },
+        exporterPdfCustomFormatter: function ( docDefinition ) {
+          docDefinition.styles.headerStyle = { fontSize: 22, bold: true };
+          docDefinition.styles.footerStyle = { fontSize: 10, bold: true };
+          return docDefinition;
+        },
+        exporterPdfOrientation: 'portrait',
+        exporterPdfPageSize: 'LETTER',
+        exporterPdfMaxGridWidth: 500,
+        exporterCsvLinkElement: angular.element(document.querySelectorAll(".custom-csv-link-location")),
+        onRegisterApi: function(gridApi){
+          $scope.gridApi = gridApi;
+        }
       };
 
-      ctrl.skillsData = skills.GetSkillData();
+      
 
       $scope.stagesGrid = {
         
@@ -54,5 +124,27 @@ app.controller('databaseController',  function ($scope, runes,cards,skills,stage
         enableFiltering: true,
         rowHeight:80,
         data: stages.GetStageData(),
+        enableGridMenu: true,
+        enableSelectAll: true,
+        exporterCsvFilename: 'LoAStages.csv',
+        exporterPdfDefaultStyle: {fontSize: 9},
+        exporterPdfTableStyle: {margin: [30, 30, 30, 30]},
+        exporterPdfTableHeaderStyle: {fontSize: 10, bold: true, italics: true, color: 'red'},
+        exporterPdfHeader: { text: "LoA Stages", style: 'headerStyle' },
+        exporterPdfFooter: function ( currentPage, pageCount ) {
+          return { text: currentPage.toString() + ' of ' + pageCount.toString(), style: 'footerStyle' };
+        },
+        exporterPdfCustomFormatter: function ( docDefinition ) {
+          docDefinition.styles.headerStyle = { fontSize: 22, bold: true };
+          docDefinition.styles.footerStyle = { fontSize: 10, bold: true };
+          return docDefinition;
+        },
+        exporterPdfOrientation: 'portrait',
+        exporterPdfPageSize: 'LETTER',
+        exporterPdfMaxGridWidth: 500,
+        exporterCsvLinkElement: angular.element(document.querySelectorAll(".custom-csv-link-location")),
+        onRegisterApi: function(gridApi){
+          $scope.gridApi = gridApi;
+        }
     }
 });
