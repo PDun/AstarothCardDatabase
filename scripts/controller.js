@@ -78,6 +78,7 @@ app.controller('databaseController',  function ($scope, runes,cards,skills,stage
           { field: 'Name' },
           { field: 'Image', cellTemplate:"<img ng-src=\"{{grid.getCellValue(row, col)}}\" lazy-src>", width:80, enableFiltering: false, enableSorting: false},
           { field: 'Cost', width: 100  },
+          { field: 'EvoCost', displayName: 'EvoCost', width: 100 },
           { field: 'Cooldown', width: 100  },
           { field: 'Race', width: 100   },
           { field: 'Skill0',  cellTooltip : function(row,col) { return 'Exp Needed: ' + row.entity.ExpArray[0] + '\r\n' + row.entity.Skill0Desc; }},

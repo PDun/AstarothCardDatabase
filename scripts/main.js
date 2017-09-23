@@ -30,7 +30,8 @@ app.controller('CardsController', function ($scope) {
                 Skill5Desc: "",
                 Skill10: "",
                 Skil10Desc: "",
-                subGridOptions: {}
+                subGridOptions: {},
+                EvoCost: parseInt(x.EvoCost)
             };
             var race = Race.find(function (y) { return y.id == x.Race });
             if (typeof race !== 'undefined') {
@@ -243,6 +244,7 @@ app.controller('CardsController', function ($scope) {
             { field: 'Skill0', cellTooltip: function (row, col) { return 'Exp Needed: ' + row.entity.ExpArray[0] + '\r\n' + row.entity.Skill0Desc; } },
             { field: 'Skill5', cellTooltip: function (row, col) { return 'Exp Needed: ' + row.entity.ExpArray[4] + '\r\n' + row.entity.Skill5Desc; } },
             { field: 'Skill10', cellTooltip: function (row, col) { return 'Exp Needed: ' + row.entity.ExpArray[9] + '\r\n' + row.entity.Skill10Desc; } },
+            { field: 'EvoCost', displayName: 'Evolved Cost'  },
 
         ],
         expandableRowTemplate: '<div class="container"><div ui-grid="row.entity.subGridOptions" style="height:150px;"></div></div>',
