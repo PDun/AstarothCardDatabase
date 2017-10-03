@@ -161,7 +161,45 @@ app.controller('databaseController',  function ($scope,$uibModal, runes,cards,sk
     $scope.CardModal = function (card) {
       $scope.activeCard = card.entity;
       $scope.modalInstance = $uibModal.open({
-          templateUrl: '_cardModal.html',
+          template: `
+          <div ng-controller="CardModalCtrl">
+          <div class="modal-header">
+              <h3>{{activeCard.Name}}</h3>
+          </div>
+          <div class="modal-body">
+              <div class="well">
+                  <div class="panel panel-default">
+                      <div class="panel-heading">Skills</div>
+                      <div class="panel-body">
+                          <div ng-show="activeCard.Skill0">0:  {{activeCard.Skill0}} - {{activeCard.Skill0Desc}}</div>
+                          <div ng-show="activeCard.Skill5">5:  {{activeCard.Skill5}} - {{activeCard.Skill5Desc}}</div>
+                          <div ng-show="activeCard.Skill10">10: {{activeCard.Skill10}} - {{activeCard.Skill10Desc}}</div>
+                      </div>
+                  </div>
+                  <div class="panel panel-default">
+                      <div class="panel-body">
+                          <div class="container-fluid">
+                              <div class="row">
+                                  <div class="col-md-4">
+                                      <div ng-show="activeCard.Cost">Cost: {{activeCard.Cost}}</div>
+      
+                                  </div>
+                                  <div class="col-md-4">
+                                      <div ng-show="activeCard.EvoCost">EvoCost: {{activeCard.EvoCost}}</div>
+                                  </div>
+                                  
+                                  <div class="col-md-4">
+                                  <div ng-show="activeCard.Cooldown">Cooldown: {{activeCard.Cooldown}}</div>
+                              </div>
+                              </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="modal-footer">
+              <button class="btn btn-primary" ng-click="ok()">OK</button>
+          </div>
+      </div>`,
           controller: 'CardModalCtrl',
           scope: $scope,
           size:'lg'
