@@ -161,7 +161,6 @@ app.controller('databaseController',  function ($scope,$uibModal, runes,cards,sk
     $scope.CardModal = function (card) {
       $scope.activeCard = card.entity;
       $scope.modalInstance = $uibModal.open({
-<<<<<<< HEAD
           template: `
           <div ng-controller="CardModalCtrl">
           <div class="modal-header">
@@ -201,9 +200,6 @@ app.controller('databaseController',  function ($scope,$uibModal, runes,cards,sk
               <button class="btn btn-primary" ng-click="ok()">OK</button>
           </div>
       </div>`,
-=======
-          templateUrl: '_cardModal.js',
->>>>>>> d8ccc4249b40f6355be03a5cef0dfbe498a6e581
           controller: 'CardModalCtrl',
           scope: $scope,
           size:'lg'
