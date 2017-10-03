@@ -161,7 +161,7 @@ app.controller('databaseController',  function ($scope,$uibModal, runes,cards,sk
     $scope.CardModal = function (card) {
       $scope.activeCard = card.entity;
       $scope.modalInstance = $uibModal.open({
-          templateUrl: '_cardModal.html',
+          templateUrl: 'FormattedData/_cardModal.html',
           controller: 'CardModalCtrl',
           scope: $scope,
           size:'lg'
