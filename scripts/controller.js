@@ -1,6 +1,11 @@
-var app = angular.module('app', ['ui.grid','ui.grid.autoResize','ui.grid.resizeColumns', 'ui.grid.expandable', 'ui.grid.selection', 'ui.grid.pinning', 'ui.grid.exporter']);
+var app = angular.module('app', ['ui.bootstrap','ui.grid','ui.grid.autoResize','ui.grid.resizeColumns', 'ui.grid.expandable', 'ui.grid.selection', 'ui.grid.pinning', 'ui.grid.exporter']);
 
-app.controller('databaseController',  function ($scope, runes,cards,skills,stages) { 
+app.controller('CardModalCtrl', ['$scope', '$uibModal', function ($scope, $uibModalInstance) {
+  $scope.ok = function () {
+      $scope.modalInstance.close($scope);
+  };
+}]);
+app.controller('databaseController',  function ($scope,$uibModal, runes,cards,skills,stages) { 
     var ctrl = this;
     $scope.skillGrid = {
       data: skills.GetSkillData(), 
@@ -33,10 +38,10 @@ app.controller('databaseController',  function ($scope, runes,cards,skills,stage
         enableFiltering: true,
         rowHeight:80,
         columnDefs: [
-          { field: 'Name' },
+          { field: 'Name' , cellTooltip : function(row,col) { return row.entity.Name } },
           { field: 'Image', cellTemplate:"<img ng-src=\"{{grid.getCellValue(row, col)}}\" lazy-src>", width:80,enableFiltering: false, enableSorting: false},
-          { field: 'Condition', width: 250 },
-          { field: 'TriggerCount', width: 150  },
+          { field: 'Condition', width: 250, cellTooltip : function(row,col) { return 'Conditions required to trigger the Rune' } },
+          { field: 'TriggerCount', width: 150, cellTooltip : function(row,col) { return 'Amount of total times the Rune will trigger in a battle.' }  },
           { field: 'Skill1',  cellTooltip : function(row,col) { return 'Exp Needed: ' + row.entity.ExpArray[0] + '\r\n' + row.entity.Skill1Desc; }},
           { field: 'Skill2',  cellTooltip : function(row,col) { return 'Exp Needed: ' + row.entity.ExpArray[1] + '\r\n' +row.entity.Skill2Desc; }},
           { field: 'Skill3'  , cellTooltip : function(row,col) { return 'Exp Needed: ' + row.entity.ExpArray[2] + '\r\n' +row.entity.Skill3Desc; }},
@@ -74,13 +79,16 @@ app.controller('databaseController',  function ($scope, runes,cards,skills,stage
         enableFiltering: true,
         rowHeight:80,
         columnDefs: [
-            {field: 'Id'},
-          { field: 'Name' },
+          {
+            field: 'name', cellTooltip: function (row, col) { return row.entity.Name },
+            cellTemplate: "<a href='#' ng-click='grid.appScope.CardModal(row)'>{{ row.entity.Name }}</a>",
+            width: 200
+        },
           { field: 'Image', cellTemplate:"<img ng-src=\"{{grid.getCellValue(row, col)}}\" lazy-src>", width:80, enableFiltering: false, enableSorting: false},
-          { field: 'Cost', width: 100  },
-          { field: 'EvoCost', displayName: 'EvoCost', width: 100 },
-          { field: 'Cooldown', width: 100  },
-          { field: 'Race', width: 100   },
+          { field: 'Cost', width: 100 , cellTooltip : function(row,col) { return row.entity.Cost }  },
+          { field: 'EvoCost', displayName: 'EvoCost', width: 100, cellTooltip : function(row,col) { return row.entity.EvoCost }  },
+          { field: 'Cooldown', width: 100  , cellTooltip : function(row,col) { return row.entity.Cooldown } },
+          { field: 'Race', width: 100, cellTooltip : function(row,col) { return row.entity.Race }    },
           { field: 'Skill0',  cellTooltip : function(row,col) { return 'Exp Needed: ' + row.entity.ExpArray[0] + '\r\n' + row.entity.Skill0Desc; }},
           { field: 'Skill5',  cellTooltip : function(row,col) { return 'Exp Needed: ' + row.entity.ExpArray[4] + '\r\n' +row.entity.Skill5Desc; }},
           { field: 'Skill10'  , cellTooltip : function(row,col) { return 'Exp Needed: ' + row.entity.ExpArray[9] + '\r\n' +row.entity.Skill10Desc; }},
@@ -148,4 +156,15 @@ app.controller('databaseController',  function ($scope, runes,cards,skills,stage
           $scope.gridApi = gridApi;
         }
     }
+    
+
+    $scope.CardModal = function (card) {
+      $scope.activeCard = card.entity;
+      $scope.modalInstance = $uibModal.open({
+          templateUrl: '_cardModal.html',
+          controller: 'CardModalCtrl',
+          scope: $scope,
+          size:'lg'
+      });
+  }
 });
