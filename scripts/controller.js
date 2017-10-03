@@ -80,7 +80,8 @@ app.controller('databaseController',  function ($scope,$uibModal, runes,cards,sk
         rowHeight:80,
         columnDefs: [
           {
-            field: 'name', cellTooltip: function (row, col) { return row.entity.Name },
+            field: 'Name', 
+            cellTooltip: function (row, col) { return row.entity.Name },
             cellTemplate: "<a href='#' ng-click='grid.appScope.CardModal(row)'>{{ row.entity.Name }}</a>",
             width: 200
         },
