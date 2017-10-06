@@ -12,7 +12,7 @@ app.controller('CardsController', function ($scope) {
 
         var Race = [{ "id": 1, Name: "Kingdom" },
         { "id": 2, Name: "Forest" },
-        { "id": 3, Name: "Werehyena" },
+        { "id": 3, Name: "Wilderness" },
         { "id": 4, Name: "Hell" },
         { "id": 100, Name: "Demon" },
         { "id": 97, Name: "Demon" },
@@ -31,28 +31,34 @@ app.controller('CardsController', function ($scope) {
                 Skill10: "",
                 Skil10Desc: "",
                 subGridOptions: {},
-                EvoCost: parseInt(x.EvoCost)
+                EvoCost: parseInt(x.EvoCost),
+                SkillString: ""
             };
+            obj.card = x;
             var race = Race.find(function (y) { return y.id == x.Race });
             if (typeof race !== 'undefined') {
                 obj.Race = race.Name;
+                
             }
             var skill0 = skills.find(function (y) { return y.SkillId == x.Skill });
             if (typeof skill0 !== 'undefined') {
                 obj.Skill0 = skill0.Name;
                 obj.Skill0Desc = skill0.Desc;
+                obj.SkillString+= skill0.Name;
             }
 
             var skill5 = skills.find(function (y) { return y.SkillId == x.LockSkill1 });
             if (typeof skill5 !== 'undefined') {
                 obj.Skill5 = skill5.Name;
                 obj.Skill5Desc = skill5.Desc;
+                obj.SkillString+= skill5.Name;
             }
 
             var skill10 = skills.find(function (y) { return y.SkillId == x.LockSkill2 });
             if (typeof skill10 !== 'undefined') {
                 obj.Skill10 = skill10.Name;
                 obj.Skill10Desc = skill10.Desc
+                obj.SkillString+= skill10.Name;
             }
             obj.subGridOptions = {
                 data:
@@ -158,24 +164,30 @@ app.controller('CardsController', function ($scope) {
         var skills = this.GetSkills();
 
         var mapStages = [];
+
         var stageData = stages.forEach(function (stage) {
             stage.MapStageDetails.forEach(function (mapStage, index) {
+
                 if (mapStage.Levels != null) {
                     mapStage.Levels.forEach(function (level) {
+                        var cardBattle = [];
+                        var cardWin = [];
+                        var runesWin =[];
                         var bonusData = level.FirstBonusWin.split('_');
                         var firstWin = "";
                         if (bonusData.length == 2) {
                             if (bonusData[0] == "Card") {
                                 for (var card in cards) {
                                     if (cards[card].CardId === bonusData[1]) {
+                                        cardWin.push(cards[card]);
                                         firstWin = "Card " + cards[card].CardName;
                                         break;
                                     }
                                 }
                             } else if (bonusData[0] == "Rune") {
-
                                 for (var rune in runes) {
                                     if (runes[rune].RuneId === bonusData[1]) {
+                                        runesWin.push(runes[rune]);
                                         firstWin = "Rune " + runes[rune].RuneName;
                                         break;
                                     }
@@ -189,6 +201,8 @@ app.controller('CardsController', function ($scope) {
                             var cardInfo = "";
                             for (var card in cards) {
                                 if (cards[card].CardId === cardData[0]) {
+                                    cards[card].Level = cardData[1];
+                                    cardBattle.push(cards[card]);
                                     cardInfo =  " Level " + cardData[1] + " " + cards[card].CardName;
                                     break;
                                 }
@@ -204,6 +218,7 @@ app.controller('CardsController', function ($scope) {
                             cardList.push(cardInfo);
                         });
                         mapStages.push({
+
                             Stage: stage.MapStageId + "-" + (index + 1),
                             Name: mapStage.Name,
                             FightName: mapStage.FightName,
@@ -212,6 +227,9 @@ app.controller('CardsController', function ($scope) {
                             ExploringBonus: level.BonusExplore,
                             FirstWinBonus: firstWin,
                             WinBonus: level.BonusWin,
+                            CardsWon: cardWin,
+                            RunesWon: runesWin,
+                            CardsFought: cardBattle,
                             Cards: cardList.toString()
                         })
                     })
@@ -225,7 +243,20 @@ app.controller('CardsController', function ($scope) {
 
 
     $scope.stagesGrid = {
+        columnDefs: [
+            { field: 'Stage' },
+            { field: 'Name' },
+            { field: 'FightName' },
+            { field: 'Level', width: 100 },
+            { field: 'ExploringBonus', width: 100 },
+            { field: 'FirstWinBonus', width: 100 },
+            { field: 'WinBonus'},
+            { field: 'CardsWon', cellTemplate: ""},
+            { field: 'RunesWon', cellTooltip: function (row, col) { return 'Exp Needed: ' + row.entity.ExpArray[9] + '\r\n' + row.entity.Skill10Desc; } },
+            { field: 'CardsFought', displayName: 'Evolved Cost'  },
+            { field: 'Cards', displayName: 'Evolved Cost'  },
 
+        ],
         rowHeight: 80,
         data: this.GetStageData(),
     }
@@ -241,9 +272,17 @@ app.controller('CardsController', function ($scope) {
             { field: 'Cost', width: 100 },
             { field: 'Cooldown', width: 100 },
             { field: 'Race', width: 100 },
-            { field: 'Skill0', cellTooltip: function (row, col) { return 'Exp Needed: ' + row.entity.ExpArray[0] + '\r\n' + row.entity.Skill0Desc; } },
-            { field: 'Skill5', cellTooltip: function (row, col) { return 'Exp Needed: ' + row.entity.ExpArray[4] + '\r\n' + row.entity.Skill5Desc; } },
-            { field: 'Skill10', cellTooltip: function (row, col) { return 'Exp Needed: ' + row.entity.ExpArray[9] + '\r\n' + row.entity.Skill10Desc; } },
+ {
+
+                name: 'Skills',
+                field: 'SkillString',
+                cellTemplate:
+                `   <div data-toggle="tooltip" data-placement="right"  ng-show="row.entity.Skill0" title="{{row.entity.Skill0Desc}}">Level 0: {{row.entity.Skill0}}</div>
+                    <div data-toggle="tooltip" data-placement="right"  ng-show="row.entity.Skill5" title="{{row.entity.Skill5Desc}}">Level 5: {{row.entity.Skill5}}</div>
+                    <div data-toggle="tooltip" data-placement="right"  ng-show="row.entity.Skill10" title="{{row.entity.Skill10Desc}}">Level 10: {{row.entity.Skill10}}</div>
+                `,
+                width: 300
+            },
             { field: 'EvoCost', displayName: 'Evolved Cost'  },
 
         ],

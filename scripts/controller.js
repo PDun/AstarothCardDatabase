@@ -90,6 +90,17 @@ app.controller('databaseController',  function ($scope,$uibModal, runes,cards,sk
           { field: 'EvoCost', displayName: 'EvoCost', width: 100, cellTooltip : function(row,col) { return row.entity.EvoCost }  },
           { field: 'Cooldown', width: 100  , cellTooltip : function(row,col) { return row.entity.Cooldown } },
           { field: 'Race', width: 100, cellTooltip : function(row,col) { return row.entity.Race }    },
+          {
+            
+                            name: 'Skills',
+                            field: 'SkillString',
+                            cellTemplate:
+                            `   <div data-toggle="tooltip" data-placement="right"  ng-show="row.entity.Skill0" title="{{row.entity.Skill0Desc}}">Level 0: {{row.entity.Skill0}}</div>
+                                <div data-toggle="tooltip" data-placement="right"  ng-show="row.entity.Skill5" title="{{row.entity.Skill5Desc}}">Level 5: {{row.entity.Skill5}}</div>
+                                <div data-toggle="tooltip" data-placement="right"  ng-show="row.entity.Skill10" title="{{row.entity.Skill10Desc}}">Level 10: {{row.entity.Skill10}}</div>
+                            `,
+                            width: 300
+          },
           { field: 'Skill0',  cellTooltip : function(row,col) { return 'Exp Needed: ' + row.entity.ExpArray[0] + '\r\n' + row.entity.Skill0Desc; }},
           { field: 'Skill5',  cellTooltip : function(row,col) { return 'Exp Needed: ' + row.entity.ExpArray[4] + '\r\n' +row.entity.Skill5Desc; }},
           { field: 'Skill10'  , cellTooltip : function(row,col) { return 'Exp Needed: ' + row.entity.ExpArray[9] + '\r\n' +row.entity.Skill10Desc; }},
