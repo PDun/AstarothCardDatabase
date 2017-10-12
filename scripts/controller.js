@@ -7,6 +7,13 @@ app.controller('CardModalCtrl', ['$scope', '$uibModal', function ($scope, $uibMo
 }]);
 app.controller('databaseController',  function ($scope,$uibModal, runes,cards,skills,stages) { 
     var ctrl = this;
+    $scope.nums = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
+    $scope.lvl = 10;
+    $scope.LevelChange = function() {
+      $scope.cardsGrid.columnDefs[10] = { field: 'subGridOptions.data['+$scope.lvl+'].Hp', displayName: 'Lvl '+$scope.lvl+' HP', width: 100  , };
+      $scope.cardsGrid.columnDefs[11] = { field: 'subGridOptions.data['+$scope.lvl+'].Attack', displayName: 'Lvl '+$scope.lvl+' Atk', width: 100  , };
+      $scope.cardsGridApi.grid.refresh();
+    }
     $scope.skillGrid = {
       data: skills.GetSkillData(), 
       enableFiltering: true,
@@ -104,9 +111,11 @@ app.controller('databaseController',  function ($scope,$uibModal, runes,cards,sk
           { field: 'Skill0',  cellTooltip : function(row,col) { return 'Exp Needed: ' + row.entity.ExpArray[0] + '\r\n' + row.entity.Skill0Desc; }},
           { field: 'Skill5',  cellTooltip : function(row,col) { return 'Exp Needed: ' + row.entity.ExpArray[4] + '\r\n' +row.entity.Skill5Desc; }},
           { field: 'Skill10'  , cellTooltip : function(row,col) { return 'Exp Needed: ' + row.entity.ExpArray[9] + '\r\n' +row.entity.Skill10Desc; }},
+          { field: 'subGridOptions.data['+$scope.lvl+'].Hp', displayName: 'Lvl '+$scope.lvl+' HP', width: 100  , },
+          { field: 'subGridOptions.data['+$scope.lvl+'].Attack', displayName: 'Lvl '+$scope.lvl+' Atk', width: 100  , },
           
         ],
-        expandableRowTemplate: '<div class="container"><div ui-grid="row.entity.subGridOptions" style="height:150px;"></div></div>',
+        expandableRowTemplate: '<div class="container-fluid"><div ui-grid="row.entity.subGridOptions" style="height:150px;"></div></div>',
         expandableRowHeight: 150,
         //subGridVariable will be available in subGrid scope
         expandableRowScope: {
@@ -170,6 +179,9 @@ app.controller('databaseController',  function ($scope,$uibModal, runes,cards,sk
     }
     
 
+    $scope.cardsGrid.onRegisterApi= function(gridApi) {
+      $scope.cardsGridApi = gridApi;                
+  };
     $scope.CardModal = function (card) {
       $scope.activeCard = card.entity;
       $scope.modalInstance = $uibModal.open({

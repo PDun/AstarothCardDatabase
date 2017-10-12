@@ -25,11 +25,20 @@
         <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
     </form>
 
-    <div ng-controller="databaseController as db">
 
         <div class="container-fluid">
-            <div class="jumbotron">
+            <div class="jumbotron">    
+                <div ng-controller="databaseController as db">
+                   <div> 
+                        <select 
+                        class="pull-right"
+                        ng-model="lvl" 
+                        ng-change="LevelChange()" 
+                        ng-options="n for n in nums"
+                        class="">
+                  </select>
                 <pre>Cards</pre>
+        </div>
                 <div ui-grid="cardsGrid" class="grid" ui-grid-auto-resize ui-grid-resize-columns ui-grid-pinning ui-grid-expandable ui-grid-exporter></div>
             </div>
         </div>
@@ -41,6 +50,7 @@
             </div>
         </div>
         <div class="container-fluid">
+            
             <div class="jumbotron">
                 <pre>Stages</pre>
                 <div ui-grid="stagesGrid" class="grid" ui-grid-auto-resize ui-grid-resize-columns ui-grid-exporter></div>
