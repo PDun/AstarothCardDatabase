@@ -271,7 +271,7 @@ app.controller('CardsController', function ($scope) {
             { field: 'Image', cellTemplate: "<img ng-src=\"{{grid.getCellValue(row, col)}}\" lazy-src>", width: 80, enableFiltering: false, enableSorting: false },
             { field: 'Cost', width: 100 },
             { field: 'Cooldown', width: 100 },
-            { field: 'Race', width: 100 },
+            { field: 'Race', width: 100 }, 
  {
 
                 name: 'Skills',
