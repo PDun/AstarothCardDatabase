@@ -5,7 +5,7 @@ app.controller('CardModalCtrl', ['$scope', '$uibModal', function ($scope, $uibMo
       $scope.modalInstance.close($scope);
   };
 }]);
-app.controller('databaseController',  function ($scope,$uibModal, runes,cards,skills,stages) { 
+app.controller('databaseController',  function ($scope,$uibModal,uiGridConstants, runes,cards,skills,stages) { 
     var ctrl = this;
     $scope.nums = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
     $scope.lvl = 10;
@@ -93,9 +93,36 @@ app.controller('databaseController',  function ($scope,$uibModal, runes,cards,sk
             width: 200
         },
           { field: 'Image', cellTemplate:"<img ng-src=\"{{grid.getCellValue(row, col)}}\" lazy-src>", width:80, enableFiltering: false, enableSorting: false},
-          { field: 'Cost', width: 100 , cellTooltip : function(row,col) { return row.entity.Cost }  },
-          { field: 'EvoCost', displayName: 'EvoCost', width: 100, cellTooltip : function(row,col) { return row.entity.EvoCost }  },
-          { field: 'Cooldown', width: 100  , cellTooltip : function(row,col) { return row.entity.Cooldown } },
+          { field: 'Cost', width: 100 , cellTooltip : function(row,col) { return row.entity.Cost } , filters: [
+            {
+              condition: uiGridConstants.filter.GREATER_THAN,
+              placeholder: 'greater than'
+            },
+            {
+              condition: uiGridConstants.filter.LESS_THAN,
+              placeholder: 'less than'
+            }
+          ] },
+          { field: 'EvoCost', displayName: 'EvoCost', width: 100, cellTooltip : function(row,col) { return row.entity.EvoCost }, filters: [
+            {
+              condition: uiGridConstants.filter.GREATER_THAN,
+              placeholder: 'greater than'
+            },
+            {
+              condition: uiGridConstants.filter.LESS_THAN,
+              placeholder: 'less than'
+            }
+          ]  },
+          { field: 'Cooldown', width: 100  , cellTooltip : function(row,col) { return row.entity.Cooldown } , filters: [
+            {
+              condition: uiGridConstants.filter.GREATER_THAN,
+              placeholder: 'greater than'
+            },
+            {
+              condition: uiGridConstants.filter.LESS_THAN,
+              placeholder: 'less than'
+            }
+          ]},
           { field: 'Race', width: 100, cellTooltip : function(row,col) { return row.entity.Race }    },
           {
             
@@ -111,8 +138,26 @@ app.controller('databaseController',  function ($scope,$uibModal, runes,cards,sk
           { field: 'Skill0',  cellTooltip : function(row,col) { return 'Exp Needed: ' + row.entity.ExpArray[0] + '\r\n' + row.entity.Skill0Desc; }},
           { field: 'Skill5',  cellTooltip : function(row,col) { return 'Exp Needed: ' + row.entity.ExpArray[4] + '\r\n' +row.entity.Skill5Desc; }},
           { field: 'Skill10'  , cellTooltip : function(row,col) { return 'Exp Needed: ' + row.entity.ExpArray[9] + '\r\n' +row.entity.Skill10Desc; }},
-          { field: 'subGridOptions.data['+$scope.lvl+'].Hp', displayName: 'Lvl '+$scope.lvl+' HP', width: 100  , },
-          { field: 'subGridOptions.data['+$scope.lvl+'].Attack', displayName: 'Lvl '+$scope.lvl+' Atk', width: 100  , },
+          { field: 'subGridOptions.data['+$scope.lvl+'].Hp', displayName: 'Lvl '+$scope.lvl+' HP', width: 100  , filters: [
+            {
+              condition: uiGridConstants.filter.GREATER_THAN,
+              placeholder: 'greater than'
+            },
+            {
+              condition: uiGridConstants.filter.LESS_THAN,
+              placeholder: 'less than'
+            }
+          ] },
+          { field: 'subGridOptions.data['+$scope.lvl+'].Attack', displayName: 'Lvl '+$scope.lvl+' Atk', width: 100  , filters: [
+            {
+              condition: uiGridConstants.filter.GREATER_THAN,
+              placeholder: 'greater than'
+            },
+            {
+              condition: uiGridConstants.filter.LESS_THAN,
+              placeholder: 'less than'
+            }
+          ] },
           
         ],
         expandableRowTemplate: '<div class="container-fluid"><div ui-grid="row.entity.subGridOptions" style="height:150px;"></div></div>',
