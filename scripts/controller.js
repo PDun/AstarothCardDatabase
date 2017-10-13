@@ -93,6 +93,7 @@ app.controller('databaseController',  function ($scope,$uibModal,uiGridConstants
             width: 200
         },
           { field: 'Image', cellTemplate:"<img ng-src=\"{{grid.getCellValue(row, col)}}\" lazy-src>", width:80, enableFiltering: false, enableSorting: false},
+          { field: 'card.Color', displayName:'Stars'},
           { field: 'Cost', width: 100 , cellTooltip : function(row,col) { return row.entity.Cost } , filters: [
             {
               condition: uiGridConstants.filter.GREATER_THAN,
@@ -135,6 +136,7 @@ app.controller('databaseController',  function ($scope,$uibModal,uiGridConstants
                             `,
                             width: 300
           },
+          
           { field: 'Skill0',  cellTooltip : function(row,col) { return 'Exp Needed: ' + row.entity.ExpArray[0] + '\r\n' + row.entity.Skill0Desc; }},
           { field: 'Skill5',  cellTooltip : function(row,col) { return 'Exp Needed: ' + row.entity.ExpArray[4] + '\r\n' +row.entity.Skill5Desc; }},
           { field: 'Skill10'  , cellTooltip : function(row,col) { return 'Exp Needed: ' + row.entity.ExpArray[9] + '\r\n' +row.entity.Skill10Desc; }},
