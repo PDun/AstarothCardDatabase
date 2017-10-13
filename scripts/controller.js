@@ -95,34 +95,34 @@ app.controller('databaseController',  function ($scope,$uibModal,uiGridConstants
           { field: 'Image', cellTemplate:"<img ng-src=\"{{grid.getCellValue(row, col)}}\" lazy-src>", width:80, enableFiltering: false, enableSorting: false},
           { field: 'card.Color', displayName:'Stars'},
           { field: 'Cost', width: 100 , cellTooltip : function(row,col) { return row.entity.Cost } , filters: [
-            {
-              condition: uiGridConstants.filter.GREATER_THAN,
-              placeholder: 'greater than'
-            },
+            
             {
               condition: uiGridConstants.filter.LESS_THAN,
               placeholder: 'less than'
+            },{
+              condition: uiGridConstants.filter.GREATER_THAN,
+              placeholder: 'greater than'
             }
           ] },
           { field: 'EvoCost', displayName: 'EvoCost', width: 100, cellTooltip : function(row,col) { return row.entity.EvoCost }, filters: [
-            {
-              condition: uiGridConstants.filter.GREATER_THAN,
-              placeholder: 'greater than'
-            },
+            
             {
               condition: uiGridConstants.filter.LESS_THAN,
               placeholder: 'less than'
+            },{
+              condition: uiGridConstants.filter.GREATER_THAN,
+              placeholder: 'greater than'
             }
           ]  },
           { field: 'Cooldown', width: 100  , cellTooltip : function(row,col) { return row.entity.Cooldown } , filters: [
-            {
-              condition: uiGridConstants.filter.GREATER_THAN,
-              placeholder: 'greater than'
-            },
+            
             {
               condition: uiGridConstants.filter.LESS_THAN,
               placeholder: 'less than'
-            }
+            },{
+              condition: uiGridConstants.filter.GREATER_THAN,
+              placeholder: 'greater than'
+            },
           ]},
           { field: 'Race', width: 100, cellTooltip : function(row,col) { return row.entity.Race }    },
           {
@@ -141,23 +141,24 @@ app.controller('databaseController',  function ($scope,$uibModal,uiGridConstants
           { field: 'Skill5',  cellTooltip : function(row,col) { return 'Exp Needed: ' + row.entity.ExpArray[4] + '\r\n' +row.entity.Skill5Desc; }},
           { field: 'Skill10'  , cellTooltip : function(row,col) { return 'Exp Needed: ' + row.entity.ExpArray[9] + '\r\n' +row.entity.Skill10Desc; }},
           { field: 'subGridOptions.data['+$scope.lvl+'].Hp', displayName: 'Lvl '+$scope.lvl+' HP', width: 100  , filters: [
-            {
-              condition: uiGridConstants.filter.GREATER_THAN,
-              placeholder: 'greater than'
-            },
+            
+            
             {
               condition: uiGridConstants.filter.LESS_THAN,
               placeholder: 'less than'
+            },{
+              condition: uiGridConstants.filter.GREATER_THAN,
+              placeholder: 'greater than'
             }
           ] },
           { field: 'subGridOptions.data['+$scope.lvl+'].Attack', displayName: 'Lvl '+$scope.lvl+' Atk', width: 100  , filters: [
-            {
-              condition: uiGridConstants.filter.GREATER_THAN,
-              placeholder: 'greater than'
-            },
+            
             {
               condition: uiGridConstants.filter.LESS_THAN,
               placeholder: 'less than'
+            },{
+              condition: uiGridConstants.filter.GREATER_THAN,
+              placeholder: 'greater than'
             }
           ] },
           
