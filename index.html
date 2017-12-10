@@ -28,17 +28,12 @@
 
     <div ng-controller="databaseController as db">
         <div class="container-fluid">
-            <div class="jumbotron">    
-                   <div> 
-                        <select 
-                        class="pull-right"
-                        ng-model="lvl" 
-                        ng-change="LevelChange()" 
-                        ng-options="n for n in nums"
-                        class="">
+            <div class="jumbotron">
+                <div>
+                    <select class="pull-right" ng-model="lvl" ng-change="LevelChange()" ng-options="n for n in nums" class="">
                   </select>
-                <pre>Cards</pre>
-        </div>
+                    <pre>Cards</pre>
+                </div>
                 <div ui-grid="cardsGrid" class="grid" ui-grid-auto-resize ui-grid-resize-columns ui-grid-pinning ui-grid-expandable ui-grid-exporter></div>
             </div>
         </div>
@@ -50,7 +45,7 @@
             </div>
         </div>
         <div class="container-fluid">
-            
+
             <div class="jumbotron">
                 <pre>Stages</pre>
                 <div ui-grid="stagesGrid" class="grid" ui-grid-auto-resize ui-grid-resize-columns ui-grid-exporter></div>
@@ -62,8 +57,18 @@
                 <div ui-grid="skillGrid" class="grid" ui-grid-auto-resize ui-grid-resize-columns ui-grid-exporter></div>
             </div>
         </div>
-    </div>
 
+        <div class="container-fluid">
+            <div class="jumbotron">
+                <div class="form-group">
+                    <label for="Cards">Cards:</label>
+                    <textarea class="form-control" rows="5" id="Cards" ng-model="cardData"></textarea>
+                    <button class="btn btn-default" ng-click="ParseCards(cardData);">Parse</button>
+                    <div ui-grid="userCardsGrid" class="grid" ui-grid-auto-resize ui-grid-resize-columns ui-grid-pinning ui-grid-expandable ui-grid-exporter></div>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- <div ng-controller="CardsController as cards">
         <div class="container">
             <div class="jumbotron">
@@ -78,7 +83,7 @@
 <script src="https://cdn.jsdelivr.net/npm/csv-js@1.0.0/csv.min.js"></script>
 
 <script src="scripts\pdfmake.js"></script>
-<script src="scripts\vfs_fonts.js"></script>t>
+<script src="scripts\vfs_fonts.js"></script>
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
     crossorigin="anonymous">

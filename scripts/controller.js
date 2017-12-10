@@ -256,6 +256,160 @@ app.controller('databaseController', function ($scope, $uibModal, uiGridConstant
   $scope.cardsGrid.onRegisterApi = function (gridApi) {
     $scope.cardsGridApi = gridApi;
   };
+
+  $scope.UserCardList = [];
+  $scope.userCardsGrid = {
+    enableSorting: true,
+    enableFiltering: true,
+    rowHeight: 80,
+    columnDefs: [
+      {
+        field: 'Name',
+        cellTooltip: function (row, col) { return row.entity.Name },
+        cellTemplate: "<a href='#' ng-click='grid.appScope.CardModal(row)'>{{ row.entity.Name }}</a>",
+        width: 200
+      },
+      { field: 'Image', cellTemplate: "<img ng-src=\"{{grid.getCellValue(row, col)}}\" lazy-src>", width: 80, enableFiltering: false, enableSorting: false },
+      {
+        field: 'card.Color', displayName: 'Stars',
+        filters: [
+          {
+            condition: uiGridConstants.filter.GREATER_THAN_OR_EQUAL,
+            placeholder: '≤'
+          },
+          {
+            condition: uiGridConstants.filter.LESS_THAN_OR_EQUAL,
+            placeholder: '≥'
+          }
+        ]
+      },
+      {
+        field: 'Cost', width: 100, cellTooltip: function (row, col) { return row.entity.Cost }, 
+        filters: [
+          {
+            condition: uiGridConstants.filter.GREATER_THAN_OR_EQUAL,
+            placeholder: '≤'
+          },
+          {
+            condition: uiGridConstants.filter.LESS_THAN_OR_EQUAL,
+            placeholder: '≥'
+          }
+        ]
+      },
+      {
+        field: 'EvoCost', displayName: 'EvoCost', width: 100, cellTooltip: function (row, col) { return row.entity.EvoCost },
+        filters: [
+          {
+            condition: uiGridConstants.filter.GREATER_THAN_OR_EQUAL,
+            placeholder: '≤'
+          },
+          {
+            condition: uiGridConstants.filter.LESS_THAN_OR_EQUAL,
+            placeholder: '≥'
+          }
+        ]
+      },
+      {
+        field: 'Cooldown', width: 100, cellTooltip: function (row, col) { return row.entity.Cooldown },         
+        filters: [
+          {
+            condition: uiGridConstants.filter.GREATER_THAN_OR_EQUAL,
+            placeholder: '≤'
+          },
+          {
+            condition: uiGridConstants.filter.LESS_THAN_OR_EQUAL,
+            placeholder: '≥'
+          }
+        ]
+      },
+      { field: 'Race', width: 100, cellTooltip: function (row, col) { return row.entity.Race } },
+      {
+
+        name: 'Skills',
+        field: 'SkillString',
+        cellTemplate:
+        `   <div data-toggle="tooltip" data-placement="right"  ng-show="row.entity.Skill0" title="{{row.entity.Skill0Desc}}">Level 0: {{row.entity.Skill0}}</div>
+                                <div data-toggle="tooltip" data-placement="right"  ng-show="row.entity.Skill5" title="{{row.entity.Skill5Desc}}">Level 5: {{row.entity.Skill5}}</div>
+                                <div data-toggle="tooltip" data-placement="right"  ng-show="row.entity.Skill10" title="{{row.entity.Skill10Desc}}">Level 10: {{row.entity.Skill10}}</div>
+                            `,
+        width: 300
+      },
+
+      { field: 'Skill0', cellTooltip: function (row, col) { return 'Exp Needed: ' + row.entity.ExpArray[0] + '\r\n' + row.entity.Skill0Desc; } },
+      { field: 'Skill5', cellTooltip: function (row, col) { return 'Exp Needed: ' + row.entity.ExpArray[4] + '\r\n' + row.entity.Skill5Desc; } },
+      { field: 'Skill10', cellTooltip: function (row, col) { return 'Exp Needed: ' + row.entity.ExpArray[9] + '\r\n' + row.entity.Skill10Desc; } },
+      {
+        field: 'subGridOptions.data[' + $scope.lvl + '].Hp', displayName: 'Lvl ' + $scope.lvl + ' HP', width: 100,   
+          filters: [
+          {
+            condition: uiGridConstants.filter.GREATER_THAN_OR_EQUAL,
+            placeholder: '≤'
+          },
+          {
+            condition: uiGridConstants.filter.LESS_THAN_OR_EQUAL,
+            placeholder: '≥'
+          }
+        ]
+      },
+      {
+        field: 'subGridOptions.data[' + $scope.lvl + '].Attack', displayName: 'Lvl ' + $scope.lvl + ' Atk', width: 100,         
+        filters: [
+          {
+            condition: uiGridConstants.filter.GREATER_THAN_OR_EQUAL,
+            placeholder: '≤'
+          },
+          {
+            condition: uiGridConstants.filter.LESS_THAN_OR_EQUAL,
+            placeholder: '≥'
+          }
+        ]
+      },
+
+    ],
+    expandableRowTemplate: '<div class="container-fluid"><div ui-grid="row.entity.subGridOptions" style="height:150px;"></div></div>',
+    expandableRowHeight: 150,
+    //subGridVariable will be available in subGrid scope
+    expandableRowScope: {
+      subGridVariable: 'subGridScopeVariable'
+    },
+    data: 'UserCardList',
+    enableGridMenu: true,
+    enableSelectAll: true,
+    exporterCsvFilename: 'LoaSkills.csv',
+    exporterPdfDefaultStyle: { fontSize: 9 },
+    exporterPdfTableStyle: { margin: [30, 30, 30, 30] },
+    exporterPdfTableHeaderStyle: { fontSize: 10, bold: true, italics: true, color: 'red' },
+    exporterPdfHeader: { text: "LoA Cards", style: 'headerStyle' },
+    exporterPdfFooter: function (currentPage, pageCount) {
+      return { text: currentPage.toString() + ' of ' + pageCount.toString(), style: 'footerStyle' };
+    },
+    exporterPdfCustomFormatter: function (docDefinition) {
+      docDefinition.styles.headerStyle = { fontSize: 22, bold: true };
+      docDefinition.styles.footerStyle = { fontSize: 10, bold: true };
+      return docDefinition;
+    },
+    exporterPdfOrientation: 'portrait',
+    exporterPdfPageSize: 'LETTER',
+    exporterPdfMaxGridWidth: 500,
+    exporterCsvLinkElement: angular.element(document.querySelectorAll(".custom-csv-link-location")),
+    onRegisterApi: function (gridApi) {
+      $scope.gridApi = gridApi;
+    }
+  };
+
+  $scope.userCardsGrid.onRegisterApi = function (gridApi) {
+    $scope.userCardsGridApi = gridApi;
+  };
+  
+  $scope.ParseCards = function(data) {
+    $scope.UserCardList = [];
+    var cardsList = angular.fromJson(data);
+    var cardsData = cards.GetCardData();
+    cardsList.data.Cards.forEach(function(userCard) {
+      $scope.UserCardList.push(cardsData.find(o => o.Id == userCard.CardId));
+    });
+    $scope.userCardsGridApi.grid.refresh();
+  }
   $scope.CardModal = function (card) {
     $scope.activeCard = card.entity;
     $scope.modalInstance = $uibModal.open({
