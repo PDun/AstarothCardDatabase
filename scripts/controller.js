@@ -407,7 +407,7 @@ app.controller('databaseController', function ($scope, $uibModal, uiGridConstant
     var cardsData = cards.GetCardData();
     cardsList.data.Cards.forEach(function(userCard) {
       var cardData = cardsData.find(o => o.Id == userCard.CardId);
-      cardData.Level = userCard.Level;
+      cardData.Level = parseInt(userCard.Level);
       cardData.Attack = cardData.subGridOptions.data[cardData.Level].Attack;
       cardData.HP = cardData.subGridOptions.data[cardData.Level].Hp;
       $scope.UserCardList.push(cardData);
