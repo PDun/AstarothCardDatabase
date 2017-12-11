@@ -334,12 +334,11 @@ app.controller('databaseController', function ($scope, $uibModal, uiGridConstant
                             `,
         width: 300
       },
-
+      {field: 'Level' },
       { field: 'Skill0', cellTooltip: function (row, col) { return 'Exp Needed: ' + row.entity.ExpArray[0] + '\r\n' + row.entity.Skill0Desc; } },
       { field: 'Skill5', cellTooltip: function (row, col) { return 'Exp Needed: ' + row.entity.ExpArray[4] + '\r\n' + row.entity.Skill5Desc; } },
       { field: 'Skill10', cellTooltip: function (row, col) { return 'Exp Needed: ' + row.entity.ExpArray[9] + '\r\n' + row.entity.Skill10Desc; } },
-      {
-        field: 'subGridOptions.data[' + $scope.lvl + '].Hp', displayName: 'Lvl ' + $scope.lvl + ' HP', width: 100,   
+      { field:  'HP' , displayName: 'HP', width: 100,   
           filters: [
           {
             condition: uiGridConstants.filter.GREATER_THAN_OR_EQUAL,
@@ -352,7 +351,8 @@ app.controller('databaseController', function ($scope, $uibModal, uiGridConstant
         ]
       },
       {
-        field: 'subGridOptions.data[' + $scope.lvl + '].Attack', displayName: 'Lvl ' + $scope.lvl + ' Atk', width: 100,         
+        field: 'Attack', 
+        displayName: 'Atk', width: 100,         
         filters: [
           {
             condition: uiGridConstants.filter.GREATER_THAN_OR_EQUAL,
@@ -406,7 +406,11 @@ app.controller('databaseController', function ($scope, $uibModal, uiGridConstant
     var cardsList = angular.fromJson(data);
     var cardsData = cards.GetCardData();
     cardsList.data.Cards.forEach(function(userCard) {
-      $scope.UserCardList.push(cardsData.find(o => o.Id == userCard.CardId));
+      var cardData = cardsData.find(o => o.Id == userCard.CardId);
+      cardData.Level = userCard.Level;
+      cardData.Attack = cardData.subGridOptions.data[cardData.Level].Attack;
+      cardData.HP = cardData.subGridOptions.data[cardData.Level].Hp;
+      $scope.UserCardList.push(cardData);
     });
     $scope.userCardsGridApi.grid.refresh();
   }
