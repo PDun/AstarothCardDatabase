@@ -107,7 +107,8 @@ app.controller('databaseController', function ($scope, $uibModal, uiGridConstant
         ]
       },
       {
-        field: 'Cost', width: 100, cellTooltip: function (row, col) { return row.entity.Cost }, 
+        field: 'Cost', width: 100, cellTooltip: function (row, col) { return row.entity.Cost },          
+        type: 'number', 
         filters: [
           {
             condition: uiGridConstants.filter.GREATER_THAN_OR_EQUAL,
@@ -120,7 +121,8 @@ app.controller('databaseController', function ($scope, $uibModal, uiGridConstant
         ]
       },
       {
-        field: 'EvoCost', displayName: 'EvoCost', width: 100, cellTooltip: function (row, col) { return row.entity.EvoCost },
+        field: 'EvoCost', displayName: 'EvoCost', width: 100, cellTooltip: function (row, col) { return row.entity.EvoCost },         
+        type: 'number', 
         filters: [
           {
             condition: uiGridConstants.filter.GREATER_THAN_OR_EQUAL,
@@ -133,7 +135,8 @@ app.controller('databaseController', function ($scope, $uibModal, uiGridConstant
         ]
       },
       {
-        field: 'Cooldown', width: 100, cellTooltip: function (row, col) { return row.entity.Cooldown },         
+        field: 'Cooldown', width: 100, cellTooltip: function (row, col) { return row.entity.Cooldown },                 
+        type: 'number',  
         filters: [
           {
             condition: uiGridConstants.filter.GREATER_THAN_OR_EQUAL,
@@ -162,7 +165,8 @@ app.controller('databaseController', function ($scope, $uibModal, uiGridConstant
       { field: 'Skill5', cellTooltip: function (row, col) { return 'Exp Needed: ' + row.entity.ExpArray[4] + '\r\n' + row.entity.Skill5Desc; } },
       { field: 'Skill10', cellTooltip: function (row, col) { return 'Exp Needed: ' + row.entity.ExpArray[9] + '\r\n' + row.entity.Skill10Desc; } },
       {
-        field: 'subGridOptions.data[' + $scope.lvl + '].Hp', displayName: 'Lvl ' + $scope.lvl + ' HP', width: 100,   
+        field: 'subGridOptions.data[' + $scope.lvl + '].Hp', displayName: 'Lvl ' + $scope.lvl + ' HP', width: 100,            
+        type: 'number', 
           filters: [
           {
             condition: uiGridConstants.filter.GREATER_THAN_OR_EQUAL,
@@ -175,7 +179,8 @@ app.controller('databaseController', function ($scope, $uibModal, uiGridConstant
         ]
       },
       {
-        field: 'subGridOptions.data[' + $scope.lvl + '].Attack', displayName: 'Lvl ' + $scope.lvl + ' Atk', width: 100,         
+        field: 'subGridOptions.data[' + $scope.lvl + '].Attack', displayName: 'Lvl ' + $scope.lvl + ' Atk', width: 100,             
+        type: 'number',      
         filters: [
           {
             condition: uiGridConstants.filter.GREATER_THAN_OR_EQUAL,
@@ -334,11 +339,12 @@ app.controller('databaseController', function ($scope, $uibModal, uiGridConstant
                             `,
         width: 300
       },
-      {field: 'Level' },
+      {field: 'Level' ,        type: 'number', },
       { field: 'Skill0', cellTooltip: function (row, col) { return 'Exp Needed: ' + row.entity.ExpArray[0] + '\r\n' + row.entity.Skill0Desc; } },
       { field: 'Skill5', cellTooltip: function (row, col) { return 'Exp Needed: ' + row.entity.ExpArray[4] + '\r\n' + row.entity.Skill5Desc; } },
       { field: 'Skill10', cellTooltip: function (row, col) { return 'Exp Needed: ' + row.entity.ExpArray[9] + '\r\n' + row.entity.Skill10Desc; } },
-      { field:  'HP' , displayName: 'HP', width: 100,   
+      { field:  'HP' , displayName: 'HP', width: 100,            
+      type: 'number', 
           filters: [
           {
             condition: uiGridConstants.filter.GREATER_THAN_OR_EQUAL,
@@ -352,7 +358,8 @@ app.controller('databaseController', function ($scope, $uibModal, uiGridConstant
       },
       {
         field: 'Attack', 
-        displayName: 'Atk', width: 100,         
+        displayName: 'Atk', width: 100,             
+        type: 'number',      
         filters: [
           {
             condition: uiGridConstants.filter.GREATER_THAN_OR_EQUAL,
@@ -408,8 +415,8 @@ app.controller('databaseController', function ($scope, $uibModal, uiGridConstant
     cardsList.data.Cards.forEach(function(userCard) {
       var cardData = cardsData.find(o => o.Id == userCard.CardId);
       cardData.Level = parseInt(userCard.Level);
-      cardData.Attack = cardData.subGridOptions.data[cardData.Level].Attack;
-      cardData.HP = cardData.subGridOptions.data[cardData.Level].Hp;
+      cardData.Attack = parseInt(cardData.subGridOptions.data[cardData.Level].Attack);
+      cardData.HP = parseInt(cardData.subGridOptions.data[cardData.Level].Hp);
       $scope.UserCardList.push(cardData);
     });
     $scope.userCardsGridApi.grid.refresh();
