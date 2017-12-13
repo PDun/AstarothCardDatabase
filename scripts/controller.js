@@ -48,7 +48,8 @@ app.controller('databaseController', function ($scope, $uibModal, uiGridConstant
       { field: 'Name', cellTooltip: function (row, col) { return row.entity.Name } },
       { field: 'Image', cellTemplate: "<img ng-src=\"{{grid.getCellValue(row, col)}}\" lazy-src>", width: 80, enableFiltering: false, enableSorting: false },
       { field: 'Condition', width: 250, cellTooltip: function (row, col) { return 'Conditions required to trigger the Rune' } },
-      { field: 'TriggerCount', width: 150, cellTooltip: function (row, col) { return 'Amount of total times the Rune will trigger in a battle.' } },
+      { field: 'TriggerCount', width: 150, 
+      type: 'number', cellTooltip: function (row, col) { return 'Amount of total times the Rune will trigger in a battle.' } },
       { field: 'Skill1', cellTooltip: function (row, col) { return 'Exp Needed: ' + row.entity.ExpArray[0] + '\r\n' + row.entity.Skill1Desc; } },
       { field: 'Skill2', cellTooltip: function (row, col) { return 'Exp Needed: ' + row.entity.ExpArray[1] + '\r\n' + row.entity.Skill2Desc; } },
       { field: 'Skill3', cellTooltip: function (row, col) { return 'Exp Needed: ' + row.entity.ExpArray[2] + '\r\n' + row.entity.Skill3Desc; } },
@@ -95,6 +96,7 @@ app.controller('databaseController', function ($scope, $uibModal, uiGridConstant
       { field: 'Image', cellTemplate: "<img ng-src=\"{{grid.getCellValue(row, col)}}\" lazy-src>", width: 80, enableFiltering: false, enableSorting: false },
       {
         field: 'card.Color', displayName: 'Stars',
+        type: 'number',
         filters: [
           {
             condition: uiGridConstants.filter.GREATER_THAN_OR_EQUAL,
@@ -277,6 +279,7 @@ app.controller('databaseController', function ($scope, $uibModal, uiGridConstant
       { field: 'Image', cellTemplate: "<img ng-src=\"{{grid.getCellValue(row, col)}}\" lazy-src>", width: 80, enableFiltering: false, enableSorting: false },
       {
         field: 'card.Color', displayName: 'Stars',
+        type: 'number',
         filters: [
           {
             condition: uiGridConstants.filter.GREATER_THAN_OR_EQUAL,
@@ -290,6 +293,7 @@ app.controller('databaseController', function ($scope, $uibModal, uiGridConstant
       },
       {
         field: 'Cost', width: 100, cellTooltip: function (row, col) { return row.entity.Cost },
+        type: 'number',
         filters: [
           {
             condition: uiGridConstants.filter.GREATER_THAN_OR_EQUAL,
@@ -303,6 +307,7 @@ app.controller('databaseController', function ($scope, $uibModal, uiGridConstant
       },
       {
         field: 'EvoCost', displayName: 'EvoCost', width: 100, cellTooltip: function (row, col) { return row.entity.EvoCost },
+        type: 'number',
         filters: [
           {
             condition: uiGridConstants.filter.GREATER_THAN_OR_EQUAL,
@@ -316,6 +321,7 @@ app.controller('databaseController', function ($scope, $uibModal, uiGridConstant
       },
       {
         field: 'Cooldown', width: 100, cellTooltip: function (row, col) { return row.entity.Cooldown },
+        type: 'number',
         filters: [
           {
             condition: uiGridConstants.filter.GREATER_THAN_OR_EQUAL,
