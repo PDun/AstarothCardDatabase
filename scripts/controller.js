@@ -7,6 +7,7 @@ app.controller('CardModalCtrl', ['$scope', '$uibModal', function ($scope, $uibMo
 }]);
 app.controller('databaseController', function ($scope, $uibModal, $timeout, uiGridConstants, runes, cards, skills, stages) {
   var ctrl = this;
+  $scope.clanWars = false;
   $scope.nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
   $scope.lvl = 10;
   $scope.LevelChange = function () {
@@ -393,29 +394,13 @@ app.controller('databaseController', function ($scope, $uibModal, $timeout, uiGr
       data: datasource,
       enableGridMenu: true,
       enableSelectAll: true,
-      exporterCsvFilename: 'LoaSkills.csv',
-      exporterPdfDefaultStyle: { fontSize: 9 },
-      exporterPdfTableStyle: { margin: [30, 30, 30, 30] },
-      exporterPdfTableHeaderStyle: { fontSize: 10, bold: true, italics: true, color: 'red' },
-      exporterPdfHeader: { text: "LoA Cards", style: 'headerStyle' },
-      exporterPdfFooter: function (currentPage, pageCount) {
-        return { text: currentPage.toString() + ' of ' + pageCount.toString(), style: 'footerStyle' };
-      },
-      exporterPdfCustomFormatter: function (docDefinition) {
-        docDefinition.styles.headerStyle = { fontSize: 22, bold: true };
-        docDefinition.styles.footerStyle = { fontSize: 10, bold: true };
-        return docDefinition;
-      },
-      exporterPdfOrientation: 'portrait',
-      exporterPdfPageSize: 'LETTER',
-      exporterPdfMaxGridWidth: 500,
       exporterCsvLinkElement: angular.element(document.querySelectorAll(".custom-csv-link-location")),
     }
   };
 
 
   $scope.UserCardList = [];
-  $scope.userCardsGrid = getCardList('UserCardList');
+  $scope.userCardsGrid = getCardList('UserCardList','UserCards');
 
   findCards = function (userCard) {
     var cardsData = cards.GetCardData();
@@ -432,12 +417,12 @@ app.controller('databaseController', function ($scope, $uibModal, $timeout, uiGr
     cardsList.data.Cards.forEach(function (userCard) {
       $scope.UserCardList.push(findCards(userCard));
     });
+    $scope.userCardsGrid.exporterCsvFilename = 'UserCards_' + (new Date(), 'yyyy-MM-dd') + '.csv';
     $scope.userCardsGridApi.grid.refresh();
   }
   $scope.userCardsGrid.onRegisterApi = function (gridApi) {
     $scope.userCardsGridApi = gridApi;
   };
-  $scope.clanWars = false;
   $scope.keypress = function ($event) {
     if ($event.altKey && $event.keyCode === 77) {
       $timeout(function () {
@@ -445,10 +430,12 @@ app.controller('databaseController', function ($scope, $uibModal, $timeout, uiGr
       });
     }
   }
+  $scope.attackerName = "";
+  $scope.defenderName = "";
   $scope.AttackerCardList = [];
   $scope.DefenderCardList = [];
-  $scope.attackerCardGrid = getCardList('AttackerCardList');
-  $scope.defenderCardGrid = getCardList('DefenderCardList');
+  $scope.attackerCardGrid = getCardList('AttackerCardList',$scope.attackerName);
+  $scope.defenderCardGrid = getCardList('DefenderCardList',$scope.defenderName);
   $scope.ParseClanWar = function (data) {
     var cardsList = angular.fromJson(data);
     $scope.attackerName = cardsList.data.AttackPlayer.NickName;
@@ -461,7 +448,11 @@ app.controller('databaseController', function ($scope, $uibModal, $timeout, uiGr
     cardsList.data.DefendPlayer.Cards.forEach(function (userCard) {
       $scope.DefenderCardList.push(findCards(userCard));
     });
-    $scope.userCardsGridApi.grid.refresh();
+    var d = new Date();
+    var monthNames = ["Jan", "Febr", "Mar", "Apr", "May", "Jun","Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    var datestring = d.getDate()  + "-" + (monthNames[d.getMonth()]) + "-" + d.getFullYear();
+    $scope.attackerCardGrid.exporterCsvFilename = $scope.attackerName + datestring + '.csv';
+    $scope.defenderCardGrid.exporterCsvFilename = $scope.defenderName + datestring + '.csv';
   };
 
   $scope.CardModal = function (card) {
