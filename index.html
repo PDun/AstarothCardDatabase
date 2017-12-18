@@ -31,7 +31,7 @@
             <div class="jumbotron">
                 <div>
                     <select class="pull-right" ng-model="lvl" ng-change="LevelChange()" ng-options="n for n in nums" class="">
-                  </select>
+                    </select>
                     <pre>Cards</pre>
                 </div>
                 <div ui-grid="cardsGrid" class="grid" ui-grid-auto-resize ui-grid-resize-columns ui-grid-pinning ui-grid-expandable ui-grid-exporter></div>
@@ -62,9 +62,23 @@
             <div class="jumbotron">
                 <div class="form-group">
                     <label for="Cards">Cards:</label>
-                    <textarea class="form-control" rows="5" id="Cards" ng-model="cardData"></textarea>
+                    <textarea class="form-control" rows="5" id="Cards" ng-model="cardData" ng-keydown="keypress($event)"></textarea>
                     <button class="btn btn-default" ng-click="ParseCards(cardData);">Parse</button>
                     <div ui-grid="userCardsGrid" class="grid" ui-grid-auto-resize ui-grid-resize-columns ui-grid-pinning ui-grid-expandable ui-grid-exporter></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="container-fluid" ng-show="clanWars">
+            <div class="jumbotron">
+                <div class="form-group">
+                    <label for="Cards">Cards:</label>
+                    <textarea class="form-control" rows="5" id="Cards" ng-model="cardData"></textarea>
+                    <button class="btn btn-default" ng-click="ParseClanWar(cardData);">Parse</button>
+                    <h1>{{attackerName}}</h1>
+                    <div ui-grid="attackerCardGrid" class="grid" ui-grid-auto-resize ui-grid-resize-columns ui-grid-pinning ui-grid-expandable ui-grid-exporter></div>
+                    <h1>{{defenderName}}</h1>
+                    <div ui-grid="defenderCardGrid" class="grid" ui-grid-auto-resize ui-grid-resize-columns ui-grid-pinning ui-grid-expandable ui-grid-exporter></div>
                 </div>
             </div>
         </div>
