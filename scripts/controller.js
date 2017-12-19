@@ -11,8 +11,8 @@ app.controller('databaseController', function ($scope, $uibModal, $timeout, uiGr
   $scope.nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
   $scope.lvl = 10;
   $scope.LevelChange = function () {
-    $scope.cardsGrid.columnDefs[10] = { field: 'subGridOptions.data[' + $scope.lvl + '].Hp', displayName: 'Lvl ' + $scope.lvl + ' HP', width: 100, };
-    $scope.cardsGrid.columnDefs[11] = { field: 'subGridOptions.data[' + $scope.lvl + '].Attack', displayName: 'Lvl ' + $scope.lvl + ' Atk', width: 100, };
+    $scope.cardsGrid.columnDefs[11] = { field: 'subGridOptions.data[' + $scope.lvl + '].Hp', displayName: 'Lvl ' + $scope.lvl + ' HP', width: 100, };
+    $scope.cardsGrid.columnDefs[12] = { field: 'subGridOptions.data[' + $scope.lvl + '].Attack', displayName: 'Lvl ' + $scope.lvl + ' Atk', width: 100, };
     $scope.cardsGridApi.grid.refresh();
   }
   $scope.skillGrid = {
